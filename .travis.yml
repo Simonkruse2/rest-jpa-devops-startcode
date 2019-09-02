@@ -11,11 +11,11 @@ cache:
     - $HOME/.m2
 
 script:
-  - mvn clean test
+  - mvn test
   - mvn -Dremote.user=$REMOTE_USER -Dremote.password=$REMOTE_PW tomcat7:deploy
 
-#services:
-  # - mysql
+services:
+   - mysql
 
 before_script:
 
