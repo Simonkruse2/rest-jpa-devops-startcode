@@ -108,7 +108,7 @@ public class EMF_Creator {
         export DEPLOYED="DEV_ON_DIGITAL_OCEAN"
         export USER="dev"
         export PW="ax2"
-        export CONNECTION_STR="jdbc:mysql://localhost:3306/mydb"
+        export CONNECTION_STR="jdbc:mysql://localhost:3306/startcode"
         
         Then save the file, and restart tomcat: sudo systemctl restart tomcat
         */
