@@ -21,27 +21,20 @@ import javax.ws.rs.core.MediaType;
 public class MovieResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
-                "pu",
-                "jdbc:mysql://localhost:3307/movie",
-                "dev",
-                "ax2",
-                EMF_Creator.Strategy.CREATE);
-    private static final MovieFacade FACADE =  MovieFacade.getMovieFacade(EMF);
+            "pu",
+            "jdbc:mysql://localhost:3307/movie",
+            "dev",
+            "ax2",
+            EMF_Creator.Strategy.CREATE);
+    private static final MovieFacade FACADE = MovieFacade.getMovieFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-            
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
 
-
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Movie entity) {
-        throw new UnsupportedOperationException();
-    }
-    
     @GET
     @Path("all")
     @Produces({MediaType.APPLICATION_JSON})
@@ -49,42 +42,42 @@ public class MovieResource {
         List<Movie> movies = FACADE.getAllMovies();
         return GSON.toJson(movies);
     }
-    
-//    @POST
-//    @Path("/{title}/{releaseYear}")
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public String createMovie(@PathParam("title") String title, @PathParam("releaseYear") int releaseYear){
-//        return  GSON.toJson(FACADE.addMovie(title, releaseYear));
-//    }
-    
+
+    @Path("fill")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String populate() {
+        FACADE.fillMovies();
+        return "{\"msg\":\"done!\"}";
+    }
+   
     @GET
     @Path("title/{title}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getMovieByTitle(@PathParam("title") String title) {
-     return GSON.toJson(FACADE.getMovieByTitle(title));   
+        return GSON.toJson(FACADE.getMovieByTitle(title));
     }
-    
+
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_JSON})
     public String getNumberOfMovies() {
         return "{\"count\":\"" + FACADE.getNumberOfMovies() + "\"}";
     }
-    
+
     @GET
     @Path("Year/{Year}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getMovieByReleaseYear(@PathParam("Year") int Year) {
-     return GSON.toJson(FACADE.getMovieByYear(Year));   
+        return GSON.toJson(FACADE.getMovieByYear(Year));
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getMovieById(@PathParam("id") int id) {
         return GSON.toJson(FACADE.getMovieByID(id));
-        
+
     }
-   
+
 }

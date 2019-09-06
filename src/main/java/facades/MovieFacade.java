@@ -56,10 +56,23 @@ public class MovieFacade {
         }
     }
 
+    
+    public void fillMovies() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.persist(new Movie(2004, "TogC", new String[]{"Torben", "Chris"}));
+            em.persist(new Movie(1999, "IogB", new String[]{"Ib", "Bo"}));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
     public List<Movie> getMovieByTitle(String title) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery query = em.createQuery("SELECT m FROM movie m WHERE title =: title", Movie.class)
+            TypedQuery query = em.createQuery("SELECT m FROM movie m WHERE title=: title", Movie.class)
                     .setParameter("title", title);
             return query.getResultList();
         } finally {
@@ -100,13 +113,13 @@ public class MovieFacade {
             em.close();
         }
     }
-
-    public static void main(String[] args) {
-        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-        MovieFacade mf = MovieFacade.getMovieFacade(emf);
-        String[] actors = {"Vin Diesel", "Lektor Blomme"};
-        System.out.println(mf.addMovie(1998, "Det forsømte forår", actors));
-        System.out.println(mf.addMovie(2087, "The Fast and the Furios 235", actors));
-        System.out.println(mf.getMovieByID(1));
-    }
+//
+//    public static void main(String[] args) {
+//        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+//        MovieFacade mf = MovieFacade.getMovieFacade(emf);
+//        String[] actors = {"Vin Diesel", "Lektor Blomme"};
+//        
+//        System.out.println(mf.addMovie(1998, "Det forsømte forår", actors));
+//        System.out.println(mf.addMovie(2087, "The Fast and the Furios 235", actors));
+//    }
 }

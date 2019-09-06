@@ -1,4 +1,4 @@
-package entities;
+    package entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -23,6 +23,9 @@ public class Movie implements Serializable {
     private int year;
     private String name;
     private String[] actors;
+
+    public Movie() {
+    }
 
     public Movie(int year, String name, String[] actors) {
         this.year = year;
