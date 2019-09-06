@@ -62,6 +62,7 @@ public class MovieFacade {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.getTransaction().commit();
             em.persist(new Movie(2004, "TogC", new String[]{"Torben", "Chris"}));
             em.persist(new Movie(1999, "IogB", new String[]{"Ib", "Bo"}));
             em.getTransaction().commit();
